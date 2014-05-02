@@ -1,0 +1,12 @@
+* ObsidianGFX
+  
+  Obsidian for Graphical Applications
+    
+    
+* TODOs
+  + 2D, 3D Arrays 
+  + Images, Textures (and use of texture memory) 
+  + Stencil operations 
+  + CUDA OpenGL Integration
+  + Support for more complicated element types, Vectors, Triangles,
+    Objects. 	    
