@@ -4,7 +4,7 @@
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-
+{-# LANGUAGE DataKinds #-} 
 
 
 {- Joel Svensson 2012, 2013 
@@ -41,10 +41,29 @@ import Obsidian.Dimension
 import Data.Word
 
 import Control.Monad
+
+---------------------------------------------------------------------------
+-- Helpers
+---------------------------------------------------------------------------
+class IDS (d :: Dimensions)  where
+  warpID :: Index d
+  threadID :: Index d
+  blockID  :: Index d
+
+instance IDS ZERO where
+  warpID = Ix0
+  threadID = Ix0
+  blockID = Ix0 
+
+-- these should have other variable names.
+instance IDS ONE where
+  warpID = Ix1 (variable "warpIdx.x")
+  threadID = Ix1 (variable "threadIdx.x") 
+  blockID = Ix1 (variable "blockIdx.x")
+
 ---------------------------------------------------------------------------
 -- Force local (requires static lengths!)
 ---------------------------------------------------------------------------
-
 class Write t where
   unsafeWritePush :: Storable a => Bool -> Push t Static d a -> Program t (Pull Static d a)
   -- unsafeWritePull :: MemoryOps a => Pull Word32 a -> Program t (Pull Word32 a) 
