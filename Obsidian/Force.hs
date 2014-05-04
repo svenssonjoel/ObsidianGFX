@@ -75,8 +75,8 @@ instance Write Warp where
       names <- names "arr"
       allocateVolatileArray names n
      
-      p <: warpAssignArray names (variable "warpID") n 
-      return $ warpPullFrom names (variable "warpID") n
+      p <: warpAssignArray names warpID -- (variable "warpID") n 
+      return $ warpPullFrom names  warpID n --(variable "warpID") n
 
 instance Write Block where
   unsafeWritePush volatile p =
