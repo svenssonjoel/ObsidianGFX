@@ -57,9 +57,9 @@ instance IDS ZERO where
 
 -- these should have other variable names.
 instance IDS ONE where
-  warpID = Ix1 (variable "warpIdx.x")
-  threadID = Ix1 (variable "threadIdx.x") 
-  blockID = Ix1 (variable "blockIdx.x")
+  warpID = Ix1 (variable "warpId.x")
+  threadID = Ix1 (variable "threadId.x") 
+  blockID = Ix1 (variable "blockId.x")
 
 ---------------------------------------------------------------------------
 -- Force local (requires static lengths!)

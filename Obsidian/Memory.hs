@@ -48,13 +48,15 @@ class  Storable a where
   readFrom       :: Names a -> a
   
   
-  -- Warp level operations   
-  warpAssignArray   :: Names a
-                      -> EWord32
-                      -> Word32
-                      -> a
-                      -> EWord32
-                      -> Program Thread ()
+  -- Warp level operations
+  -- 
+  warpAssignArray   :: Num (Dims d EW32)
+                       => Names a
+                       -> Index d  -- EWord32
+                       -> Static d -- Word32
+                       -> a
+                       -> Index d -- EWord32
+                       -> Program Thread ()
   warpPullFrom      :: Num (Dims d EW32) => Names a -> Dynamic d -> Static d -> Pull Static d a
   
   -- Extra
@@ -86,7 +88,7 @@ instance Scalar a => Storable (Exp a) where
 
   -- Warp ops   
   warpAssignArray (Single name) warpID step a ix =
-    Assign name [warpID * fromIntegral step + ix] a 
+    Assign name (indexToList (toIndex (fromIndex warpID * extents step + fromIndex ix))) a
 
   warpPullFrom (Single name) warpID n
     = mkPull n (\i -> index name (toIndex (extents warpID * extents n + fromIndex i)))
